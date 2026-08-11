@@ -1,0 +1,99 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{booktabs}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    breaklines=true,
+    showstringspaces=false
+}
+
+\title[INT210 - Sesión 0.6]{Sesión 0.6: Diccionarios, \texttt{defaultdict} y Frecuencias}
+\subtitle{Módulo 0.2: Estructuras de Datos Nativas en Python}
+\author[Diplomado en Ciencia de Datos]{Cátedra de Inteligencia Artificial y Ciencia de Datos}
+\institute[INT210]{Machine Learning From Scratch}
+\date{Semana 2}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Contenido de la Sesión}
+    \tableofcontents
+\end{frame}
+
+\section{El Cofre de Llaves y Tablas Hash}
+
+\begin{frame}{La Analogía: El Cofre de Llaves Mágicas y la Libreta}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \begin{itemize}
+            \item \textbf{Diccionario (\texttt{dict}):} Llaves mágicas que abren cajas en $\mathcal{O}(1)$. Si la llave no existe, genera \texttt{KeyError}.
+            \item \textbf{\texttt{defaultdict(int)}:} Libreta con auto-reposición. Si una clave no existe, la inicializa en $0$ silenciosamente.
+            \item \textbf{\texttt{Counter}:} Especialista en conteo de frecuencias y extracción del top $k$ de mayor densidad.
+        \end{itemize}
+        \column{0.45\textwidth}
+        \begin{alertblock}{Principio de Complejidad}
+            El acceso hash directo $\mathcal{O}(1)$ es la base del Procesamiento de Lenguaje Natural (NLP) y de la indexación de eventos de seguridad.
+        \end{alertblock}
+    \end{columns}
+\end{frame}
+
+\section{Estructura Interna y Mitigación de KeyError}
+
+\begin{frame}[fragile]{Evolución de Técnicas de Conteo}
+    \textbf{1. Conteo Seguro con \texttt{.get()}:}
+\begin{lstlisting}
+conteo[palabra] = conteo.get(palabra, 0) + 1
+\end{lstlisting}
+    \vspace{0.2cm}
+    \textbf{2. Conteo con \texttt{defaultdict(int)}:}
+\begin{lstlisting}
+conteo_default = defaultdict(int)
+for palabra in tokens:
+    conteo_default[palabra] += 1
+\end{lstlisting}
+    \vspace{0.2cm}
+    \textbf{3. Extracción de los $k$ Más Frecuentes con \texttt{Counter}:}
+\begin{lstlisting}
+top_amenazas = Counter(tokens).most_common(5)
+\end{lstlisting}
+\end{frame}
+
+\section{Aplicación en Ciberseguridad y NLP}
+
+\begin{frame}{Bolsa de Palabras (*Bag-of-Words*) para Detección de Phishing}
+    Cada mensaje se proyecta como una combinación lineal de frecuencias léxicas:
+    \begin{equation*}
+        \text{Score}(\text{mensaje}) = \sum_{w \in \text{mensaje}} \text{freq}(w) \cdot \text{PesoRiesgo}(w)
+    \end{equation*}
+    \begin{block}{Regla de Decisión}
+        \begin{equation*}
+            \text{Clase} = \begin{cases}
+                \text{Phishing}, & \text{si } \text{Score} \ge \theta \\
+                \text{Legítimo}, & \text{si } \text{Score} < \theta
+            \end{cases}
+        \end{equation*}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Conclusiones}
+    \begin{itemize}
+        \item Las tablas hash nativas son la estructura óptima para indexación de texto y métricas discretas.
+        \item \texttt{defaultdict} y \texttt{Counter} simplifican drásticamente el código y previenen excepciones en producción.
+        \item \textbf{Siguiente Sesión (0.7):} Sets y Álgebra de Conjuntos en Alta Velocidad.
+    \end{itemize}
+\end{frame}
+
+\end{document}

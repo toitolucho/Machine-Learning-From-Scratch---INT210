@@ -1,0 +1,99 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{booktabs}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    breaklines=true,
+    showstringspaces=false
+}
+
+\title[INT210 - Sesión 0.8]{Sesión 0.8: Ingesta de Archivos Delimitados "From Scratch"}
+\subtitle{Módulo 0.2: Estructuras de Datos Nativas en Python}
+\author[Diplomado en Ciencia de Datos]{Cátedra de Inteligencia Artificial y Ciencia de Datos}
+\institute[INT210]{Machine Learning From Scratch}
+\date{Semana 2}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Contenido de la Sesión}
+    \tableofcontents
+\end{frame}
+
+\section{El Archivero con Llave y Context Managers}
+
+\begin{frame}{La Analogía: El Archivero con Llave de Seguridad}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \begin{itemize}
+            \item \textbf{\texttt{with open()}:} Abre la gaveta, procesa los datos y garantiza el cierre seguro al finalizar (patrón RAII).
+            \item \textbf{\texttt{csv.reader}:} Lector en flujo (*Streaming*) que decodifica campos delimitados sin cargar todo el archivo en RAM.
+            \item \textbf{\texttt{namedtuple}:} Registros inmutables con acceso por nombre de atributo y consumo mínimo de memoria.
+        \end{itemize}
+        \column{0.45\textwidth}
+        \begin{alertblock}{Prevención de Fugas de Recursos}
+            Omitir el administrador de contexto puede causar \textit{File Descriptor Leaks} y bloqueos del sistema operativo bajo alta concurrencia.
+        \end{alertblock}
+    \end{columns}
+\end{frame}
+
+\section{Arquitectura de Ingesta Nativa en Python}
+
+\begin{frame}[fragile]{Pipeline de Ingesta Segura (Joel Grus, Cap. 9)}
+\begin{lstlisting}
+from collections import namedtuple
+import csv
+
+Transaccion = namedtuple('Transaccion', ['id', 'monto', 'ip'])
+
+def cargar_datos(ruta):
+    registros = []
+    with open(ruta, mode='r', encoding='utf-8', newline='') as f:
+        lector = csv.DictReader(f)
+        for fila in lector:
+            # Casteo estricto de tipos de datos
+            reg = Transaccion(fila['id'], float(fila['monto']), fila['ip'])
+            registros.append(reg)
+    return registros
+\end{lstlisting}
+\end{frame}
+
+\section{Comparación de Desempeño: Nativo vs Pandas}
+
+\begin{frame}{Sobrecarga de Memoria y Latencia}
+    \begin{center}
+    \begin{tabular}{lll}
+        \toprule
+        \textbf{Criterio} & \textbf{Python Nativo (\texttt{csv} + \texttt{namedtuple})} & \textbf{Pandas DataFrame} \\
+        \midrule
+        \textbf{Memoria Base} & $\approx 10 - 15$ MB & $\approx 50 - 120$ MB \\
+        \textbf{Cold Start} & $< 15$ ms & $1.5 - 3.0$ s \\
+        \textbf{Dependencias} & Cero (Librería Estándar) & NumPy, pytz, C-extensions \\
+        \textbf{Ideal Para} & Microservicios Serverless & Análisis Exploratorio Complejo \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Resumen General del Módulo 0}
+    \begin{itemize}
+        \item \textbf{Semana 1:} Dominio de bifurcaciones, \texttt{match-case}, bucles deterministas e indeterminados y matrices de confusión.
+        \item \textbf{Semana 2:} Álgebra lineal vectorial con listas/tuplas, tablas hash con diccionarios/defaultdict, conjuntos de alta velocidad e ingesta pura "From Scratch".
+        \item \textbf{¡Felicidades! Tienes las bases sólidas para adentrarte en los modelos de Machine Learning matemáticos del Capítulo 1.}
+    \end{itemize}
+\end{frame}
+
+\end{document}

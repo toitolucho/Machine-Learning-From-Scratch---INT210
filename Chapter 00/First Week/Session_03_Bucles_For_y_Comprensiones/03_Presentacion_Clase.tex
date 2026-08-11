@@ -1,0 +1,121 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{booktabs}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    breaklines=true,
+    showstringspaces=false
+}
+
+\title[INT210 - Sesión 0.3]{Sesión 0.3: Bucles Iterativos Deterministas (\texttt{for}) y Comprensiones}
+\subtitle{Módulo 0: Fundamentos Algorítmicos en Python}
+\author[Diplomado en Ciencia de Datos]{Cátedra de Inteligencia Artificial y Ciencia de Datos}
+\institute[INT210]{Machine Learning From Scratch}
+\date{Semana 1}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Contenido de la Sesión}
+    \tableofcontents
+\end{frame}
+
+\section{La Cinta Transportadora e Iteradores}
+
+\begin{frame}{La Analogía Infantil: La Cinta Transportadora}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \begin{itemize}
+            \item El robot no acumula todas las galletas en su mesa; recibe \textbf{una a la vez}.
+            \item Procesa el elemento actual y solicita el siguiente mediante una señal.
+            \item Al terminarse la bandeja, el flujo se detiene de forma limpia.
+        \end{itemize}
+        \column{0.45\textwidth}
+        \begin{alertblock}{Evaluación Perezosa (\textit{Lazy Evaluation})}
+            Calcular elementos bajo demanda ahorra memoria RAM y permite procesar volúmenes masivos de datos (*Big Data*).
+        \end{alertblock}
+    \end{columns}
+\end{frame}
+
+\section{Protocolo Iterador y Memoria RAM}
+
+\begin{frame}{El Protocolo Iterador de Python}
+    \begin{center}
+        \texttt{coleccion.\_\_iter\_\_()} $\longrightarrow$ \texttt{iterador.\_\_next\_\_()} $\longrightarrow$ \texttt{StopIteration}
+    \end{center}
+    \vspace{0.3cm}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Secuencia Virtual (\texttt{range}):}
+        \begin{itemize}
+            \item Almacena solo \texttt{(start, stop, step)}.
+            \item \texttt{sys.getsizeof(range(10\^{}8))} $\approx 48$ bytes.
+            \item Complejidad espacial: $\mathcal{O}(1)$.
+        \end{itemize}
+        \column{0.5\textwidth}
+        \textbf{Lista Materializada en RAM:}
+        \begin{itemize}
+            \item Reserva memoria contigua para cada puntero.
+            \item \texttt{list(range(10\^{}8))} $\approx 800$ MB - 3.5 GB.
+            \item Complejidad espacial: $\mathcal{O}(N)$.
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\section{Comprensiones Pythonicas y Enumerate}
+
+\begin{frame}[fragile]{List Comprehensions y Transformación Matricial}
+    \textbf{Transformación de Píxeles RGB a Escala de Grises:}
+\begin{lstlisting}
+imagen_grises = [
+    [int(0.299*r + 0.587*g + 0.114*b) for r, g, b in fila]
+    for fila in imagen_rgb
+]
+\end{lstlisting}
+    \vspace{0.2cm}
+    \textbf{Uso de \texttt{enumerate} para indexación bidimensional:}
+\begin{lstlisting}
+for y, fila in enumerate(imagen_rgb):
+    for x, pixel in enumerate(fila):
+        procesar_coordenada(x, y, pixel)
+\end{lstlisting}
+\end{frame}
+
+\section{Casos de Uso en Ciberseguridad y Arte}
+
+\begin{frame}[fragile]{Filtrado de Puertos de Red con Comprensiones}
+\begin{lstlisting}
+PUERTOS_CRITICOS = {23, 445, 3389}
+
+alertas = [
+    log for log in logs_escaneo 
+    if log['puerto'] in PUERTOS_CRITICOS and log['estado'] == 'Abierto'
+]
+\end{lstlisting}
+\begin{exampleblock}{Ventajas del Paradigma Declarativo}
+    Mayor expresividad sintáctica, ejecución interna optimizada en C por el intérprete y código libre de efectos secundarios (*side-effects*).
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Conclusiones}
+    \begin{itemize}
+        \item El bucle \texttt{for} en Python es un consumidor de iteradores de alto nivel.
+        \item Las listas por comprensión permiten vectorizar la lógica de transformación de matrices y registros.
+        \item \textbf{Siguiente Sesión (0.4):} Bucles Indeterminados (\texttt{while}), Señales Centinela y Convergencia Numérica.
+    \end{itemize}
+\end{frame}
+
+\end{document}

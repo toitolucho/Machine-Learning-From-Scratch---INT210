@@ -1,0 +1,15 @@
+# ==============================================================================
+# Exclusiones de Contexto para Agentes e Indexación (rules.txt y Soluciones)
+# ==============================================================================
+
+# Reglas del Agente y Prompts Curriculares
+rules.txt
+**/rules.txt
+
+# Solucionarios Docentes y Respuestas de Laboratorios
+*_Guia_de_Trabajo_Soluciones.md
+**/*_Guia_de_Trabajo_Soluciones.md
+*_Soluciones_Laboratorio.md
+**/*_Soluciones_Laboratorio.md
+*Soluciones*.md
+**/*Soluciones*.md

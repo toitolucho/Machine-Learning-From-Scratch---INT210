@@ -1,0 +1,138 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{booktabs}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    breaklines=true,
+    showstringspaces=false
+}
+
+\title[INT210 - Sesión 0.1]{Sesión 0.1: Bifurcaciones Lógicas y Decisiones Condicionales}
+\subtitle{Módulo 0: Fundamentos Algorítmicos en Python}
+\author[Diplomado en Ciencia de Datos]{Cátedra de Inteligencia Artificial y Ciencia de Datos}
+\institute[INT210]{Machine Learning From Scratch}
+\date{Semana 1}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Contenido de la Sesión}
+    \tableofcontents
+\end{frame}
+
+\section{Introducción y Analogía}
+
+\begin{frame}{La Analogía Infantil: El Guardián del Parque de Diversiones}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \begin{itemize}
+            \item \textbf{Condición Principal (\texttt{if}):} Estatura $\ge 140$ cm y boleto dorado $\rightarrow$ Acceso a primera fila.
+            \item \textbf{Alternativa (\texttt{elif}):} Estatura $\ge 120$ cm con tutor $\rightarrow$ Acceso supervisado.
+            \item \textbf{Caso por defecto (\texttt{else}):} Redirección a juegos infantiles.
+        \end{itemize}
+        \column{0.45\textwidth}
+        \begin{alertblock}{Principio Fundamental}
+            El procesador evalúa proposiciones lógicas en secuencia determinista y bifurca el flujo de ejecución hacia una única rama válida.
+        \end{alertblock}
+    \end{columns}
+\end{frame}
+
+\section{Formalismo Matemático: Álgebra de Boole}
+
+\begin{frame}{Álgebra Booleana y Tablas de Verdad}
+    Para dos proposiciones lógicas $P, Q \in \{\text{True}, \text{False}\}$:
+    \begin{center}
+    \begin{tabular}{ccccc}
+        \toprule
+        $P$ & $Q$ & $P \land Q$ (\texttt{and}) & $P \lor Q$ (\texttt{or}) & $\neg P$ (\texttt{not}) \\
+        \midrule
+        True & True & \textbf{True} & \textbf{True} & \textbf{False} \\
+        True & False & \textbf{False} & \textbf{True} & \textbf{False} \\
+        False & True & \textbf{False} & \textbf{True} & \textbf{True} \\
+        False & False & \textbf{False} & \textbf{False} & \textbf{True} \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+    \vspace{0.3cm}
+    \textbf{Evaluación de Cortocircuito (\textit{Short-Circuit}):}
+    \begin{itemize}
+        \item En \texttt{A and B}: Si $A = \text{False}$, $B$ jamás es evaluado.
+        \item En \texttt{A or B}: Si $A = \text{True}$, $B$ se omite por completo.
+    \end{itemize}
+\end{frame}
+
+\section{Implementación y Casos de Estudio}
+
+\begin{frame}[fragile]{Caso de Estudio 1: Firewall por Reglas en Ciberseguridad}
+\begin{lstlisting}
+def clasificador_firewall(ip_origen, puerto, protocolo, tamano_bytes):
+    if ip_origen in LISTA_NEGRA_IPS:
+        return 'Ataque'
+    elif puerto in PUERTOS_CRITICOS:
+        return 'Ataque'
+    elif protocolo == 'UDP' and tamano_bytes > 1500:
+        return 'Ataque'
+    else:
+        return 'Normal'
+\end{lstlisting}
+\begin{exampleblock}{Ventaja Arquitectónica}
+    Las cláusulas de guardia (\textit{guard clauses}) minimizan la profundidad del árbol de bifurcaciones y optimizan la legibilidad del código.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Caso de Estudio 2: Luminancia en Arte Digital}
+    La percepción psicofísica humana del brillo se modela según la norma ITU-R BT.601:
+    \begin{equation*}
+        L = 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B
+    \end{equation*}
+    \begin{block}{Segmentación Tonal Fotométrica}
+        \begin{itemize}
+            \item \textbf{Low-Key (Sombras):} $L < 64$
+            \item \textbf{Mid-Tone (Tonos Medios):} $64 \le L < 192$
+            \item \textbf{High-Key (Altas Luces):} $L \ge 192$
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\section{Evaluación Heurística: Matriz de Confusión}
+
+\begin{frame}{La Matriz de Confusión Heurística}
+    \begin{center}
+    \begin{tabular}{c|cc}
+        \toprule
+        & \textbf{Predicho Positivo (Spam)} & \textbf{Predicho Negativo (Ham)} \\
+        \midrule
+        \textbf{Real Positivo} & \textbf{VP} (Ataque Mitigado) & \textbf{FN} (Brecha de Seguridad) \\
+        \textbf{Real Negativo} & \textbf{FP} (Bloqueo Accidental) & \textbf{VN} (Tráfico Legítimo) \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+    \vspace{0.4cm}
+    \begin{itemize}
+        \item \textbf{Precisión:} $\frac{\text{VP}}{\text{VP} + \text{FP}}$ (Calidad de las alarmas emitidas).
+        \item \textbf{Exhaustividad (\textit{Recall}):} $\frac{\text{VP}}{\text{VP} + \text{FN}}$ (Capacidad de interceptación total).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusiones y Siguiente Paso}
+    \begin{itemize}
+        \item Las bifurcaciones \texttt{if-elif-else} constituyen la unidad atómica de decisión algorítmica.
+        \item La evaluación de matrices de confusión permite auditar cuantitativamente reglas hechas a mano.
+        \item \textbf{Siguiente Sesión (0.2):} Estructuras Multicamino con \texttt{match-case} y optimización temporal $\mathcal{O}(1)$ mediante Diccionarios de Despacho.
+    \end{itemize}
+\end{frame}
+
+\end{document}

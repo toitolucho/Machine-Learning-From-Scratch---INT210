@@ -1,0 +1,103 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{booktabs}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    breaklines=true,
+    showstringspaces=false
+}
+
+\title[INT210 - Sesión 0.5]{Sesión 0.5: Listas, Tuplas y Vectores Matemáticos}
+\subtitle{Módulo 0.2: Estructuras de Datos Nativas en Python}
+\author[Diplomado en Ciencia de Datos]{Cátedra de Inteligencia Artificial y Ciencia de Datos}
+\institute[INT210]{Machine Learning From Scratch}
+\date{Semana 2}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Contenido de la Sesión}
+    \tableofcontents
+\end{frame}
+
+\section{Introducción y Analogía}
+
+\begin{frame}{La Analogía: El Tren de Carga vs El Mapa en Piedra}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \begin{itemize}
+            \item \textbf{Lista (\texttt{list}):} Tren de vagones numerados. Mutable, permite añadir (\texttt{append}), eliminar e intercambiar carga dinámica.
+            \item \textbf{Tupla (\texttt{tuple}):} Coordenadas grabadas en piedra. Inmutable, tamaño fijo, acceso instantáneo y seguridad ante modificaciones.
+        \end{itemize}
+        \column{0.45\textwidth}
+        \begin{alertblock}{Principio de Diseño}
+            Los pesos y gradientes entrenables se manipulan en listas; las dimensiones fijas y registros de configuración se protegen en tuplas.
+        \end{alertblock}
+    \end{columns}
+\end{frame}
+
+\section{Álgebra Lineal 'From Scratch'}
+
+\begin{frame}{Vectores en $\mathbb{R}^n$ (Joel Grus, Cap. 4)}
+    Representamos un vector como \texttt{Vector = List[float]}:
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Suma Vectorial:}
+        \begin{equation*}
+            \vec{u} + \vec{v} = [u_1 + v_1, \dots, u_n + v_n]
+        \end{equation*}
+        \textbf{Multiplicación Escalar:}
+        \begin{equation*}
+            c \cdot \vec{v} = [c \cdot v_1, \dots, c \cdot v_n]
+        \end{equation*}
+        \column{0.5\textwidth}
+        \textbf{Producto Punto (\textit{Dot}):}
+        \begin{equation*}
+            \vec{u} \cdot \vec{v} = \sum_{i=1}^n u_i \cdot v_i
+        \end{equation*}
+        \textbf{Distancia Euclidiana:}
+        \begin{equation*}
+            d(\vec{u}, \vec{v}) = \sqrt{\sum_{i=1}^n (u_i - v_i)^2}
+        \end{equation*}
+    \end{columns}
+\end{frame}
+
+\section{Aplicaciones en Videojuegos y Arte}
+
+\begin{frame}[fragile]{Colisiones en Motores 3D y Mezcla RGBA}
+    \textbf{Detección de Impacto por Distancia al Cuadrado:}
+\begin{lstlisting}
+def colision_optimizada(pos_a, pos_b, radio_contacto):
+    # Evita math.sqrt() para maximizar FPS
+    dist_sq = sum((a - b)**2 for a, b in zip(pos_a, pos_b))
+    return dist_sq <= radio_contacto**2
+\end{lstlisting}
+    \vspace{0.2cm}
+    \textbf{Mezcla Alfa de Canales RGBA:}
+\begin{lstlisting}
+r_out = int(a * r_capa + (1.0 - a) * r_fondo)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Conclusiones}
+    \begin{itemize}
+        \item Las listas y tuplas proporcionan los bloques constructivos elementales del Álgebra Lineal.
+        \item La optimización numérica (como evitar raíces innecesarias) es vital en sistemas de tiempo real.
+        \item \textbf{Siguiente Sesión (0.6):} Diccionarios Hash, \texttt{defaultdict} y Análisis de Frecuencia (NLP).
+    \end{itemize}
+\end{frame}
+
+\end{document}

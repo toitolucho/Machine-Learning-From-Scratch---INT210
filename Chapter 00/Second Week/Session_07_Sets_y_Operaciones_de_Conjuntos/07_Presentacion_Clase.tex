@@ -1,0 +1,96 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{booktabs}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    breaklines=true,
+    showstringspaces=false
+}
+
+\title[INT210 - Sesión 0.7]{Sesión 0.7: Sets y Álgebra de Conjuntos en Alta Velocidad}
+\subtitle{Módulo 0.2: Estructuras de Datos Nativas en Python}
+\author[Diplomado en Ciencia de Datos]{Cátedra de Inteligencia Artificial y Ciencia de Datos}
+\institute[INT210]{Machine Learning From Scratch}
+\date{Semana 2}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Contenido de la Sesión}
+    \tableofcontents
+\end{frame}
+
+\section{El Álbum de Figuritas y Conjuntos}
+
+\begin{frame}{La Analogía: El Álbum de Figuritas sin Duplicados}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \begin{itemize}
+            \item \textbf{Unicidad Automática:} No existen estampas duplicadas en un conjunto.
+            \item \textbf{Membresía Instantánea:} Saber si una estampa existe toma tiempo $\mathcal{O}(1)$.
+            \item \textbf{Intersección ($A \cap B$):} Figuritas repetidas que ambos amigos poseen para intercambiar.
+        \end{itemize}
+        \column{0.45\textwidth}
+        \begin{alertblock}{Propiedad Hash}
+            Los elementos de un \texttt{set} deben ser estrictamente inmutables (\textit{hashables}: \texttt{int}, \texttt{str}, \texttt{tuple}).
+        \end{alertblock}
+    \end{columns}
+\end{frame}
+
+\section{Operaciones Formales del Álgebra de Conjuntos}
+
+\begin{frame}{Operaciones Fundamentales (Joel Grus, Cap. 2)}
+    Sean dos conjuntos $A$ y $B$:
+    \begin{center}
+    \begin{tabular}{lll}
+        \toprule
+        \textbf{Operación Matemática} & \textbf{Sintaxis Python} & \textbf{Complejidad} \\
+        \midrule
+        \textbf{Unión ($A \cup B$)} & \texttt{A | B} & $\mathcal{O}(|A| + |B|)$ \\
+        \textbf{Intersección ($A \cap B$)} & \texttt{A \& B} & $\mathcal{O}(\min(|A|, |B|))$ \\
+        \textbf{Diferencia ($A \setminus B$)} & \texttt{A - B} & $\mathcal{O}(|A|)$ \\
+        \textbf{Diferencia Simétrica ($A \Delta B$)} & \texttt{A \^{} B} & $\mathcal{O}(|A| + |B|)$ \\
+        \textbf{Pertenencia ($x \in A$)} & \texttt{x in A} & $\mathcal{O}(1)$ \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+\section{Aplicaciones en Ciberseguridad y Arte}
+
+\begin{frame}[fragile]{Filtrado de Botnets y Deduplicación Cromática}
+    \textbf{Filtrado Perimetral contra Lista Negra:}
+\begin{lstlisting}
+blacklist_total = feed_cert | feed_soc | feed_cloud
+if ip_entrante in blacklist_total:  # Consulta en O(1)
+    bloquear_paquete()
+\end{lstlisting}
+    \vspace{0.2cm}
+    \textbf{Deduplicación de Paleta en Arte Digital:}
+\begin{lstlisting}
+paleta_unica = set(lista_pixeles_rgb)  # O(N) deduplicacion
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Conclusiones}
+    \begin{itemize}
+        \item El uso de \texttt{set} para comprobación de membresía es miles de veces más veloz que una búsqueda en \texttt{list}.
+        \item El álgebra de conjuntos permite fusionar fuentes de inteligencia de amenazas con precisión matemática.
+        \item \textbf{Siguiente Sesión (0.8):} Ingesta y Parseo de Archivos Delimitados "From Scratch".
+    \end{itemize}
+\end{frame}
+
+\end{document}

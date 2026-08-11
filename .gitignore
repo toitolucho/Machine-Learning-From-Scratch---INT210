@@ -1,0 +1,37 @@
+# ==============================================================================
+# Archivos y Reglas Excluidas para el Estudiante / Repositorio Público
+# ==============================================================================
+
+# Reglas y Prompts Maestros Curriculares
+rules.txt
+**/rules.txt
+
+# Solucionarios Docentes y Guías de Soluciones
+*_Guia_de_Trabajo_Soluciones.md
+**/*_Guia_de_Trabajo_Soluciones.md
+*_Soluciones_Laboratorio.md
+**/*_Soluciones_Laboratorio.md
+*Soluciones*.md
+**/*Soluciones*.md
+
+# ==============================================================================
+# Entorno de Desarrollo y Caché de Python / Jupyter
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.env
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Archivos de Sistema Operativo
+.DS_Store
+Thumbs.db
+Desktop.ini

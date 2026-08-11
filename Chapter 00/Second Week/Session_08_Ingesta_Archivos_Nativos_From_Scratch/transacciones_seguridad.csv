@@ -1,0 +1,9 @@
+id_transaccion,usuario,monto_usd,ip_origen,pais_origen,hora_registro,etiqueta_real
+TX-1001,carlos_admin,12500.00,198.51.100.4,Rusia,03:15,Fraude
+TX-1002,maria_ventas,450.50,192.168.1.15,Bolivia,10:30,Normal
+TX-1003,juan_dev,8900.00,203.0.113.88,Nigeria,02:45,Fraude
+TX-1004,elena_art,120.00,192.168.1.20,Bolivia,14:20,Normal
+TX-1005,guest_user,15000.00,198.51.100.99,Rusia,04:10,Fraude
+TX-1006,diego_pm,350.00,10.0.0.12,Bolivia,11:05,Normal
+TX-1007,carlos_admin,7800.00,198.51.100.4,China,01:50,Fraude
+TX-1008,carolina_hr,95.00,192.168.1.55,Bolivia,16:40,Normal

@@ -1,0 +1,123 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{booktabs}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{gray}\itshape,
+    breaklines=true,
+    showstringspaces=false
+}
+
+\title[INT210 - Sesión 0.2]{Sesión 0.2: Estructuras Multicamino y Diccionarios de Despacho}
+\subtitle{Módulo 0: Fundamentos Algorítmicos en Python}
+\author[Diplomado en Ciencia de Datos]{Cátedra de Inteligencia Artificial y Ciencia de Datos}
+\institute[INT210]{Machine Learning From Scratch}
+\date{Semana 1}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Contenido de la Sesión}
+    \tableofcontents
+\end{frame}
+
+\section{Introducción y Analogía Postal}
+
+\begin{frame}{La Analogía Infantil: La Central de Clasificación Postal}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \begin{itemize}
+            \item \textbf{Enfoque Lineal (\texttt{if-elif}):} El cartero pregunta buzón por buzón de forma secuencial ($\mathcal{O}(N)$).
+            \item \textbf{Enfoque Indexado (Despacho Hash):} El código postal dirige la carta instantáneamente por un tubo neumático ($\mathcal{O}(1)$).
+        \end{itemize}
+        \column{0.45\textwidth}
+        \begin{alertblock}{Principio de Escalabilidad}
+            A medida que el número de rutas crece, la búsqueda lineal degrada la latencia. La búsqueda indexada mantiene un tiempo de respuesta constante.
+        \end{alertblock}
+    \end{columns}
+\end{frame}
+
+\section{Análisis de Complejidad Algorítmica}
+
+\begin{frame}{Complejidad Temporal: $\mathcal{O}(N)$ vs $\mathcal{O}(1)$}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Bifurcaciones Lineales:}
+        \begin{equation*}
+            T_{\text{lineal}}(N) = \frac{N + 1}{2} \cdot c \implies \mathcal{O}(N)
+        \end{equation*}
+        \begin{itemize}
+            \item Evaluación secuencial de cada condición.
+            \item Peor caso: $N$ comprobaciones.
+        \end{itemize}
+        \column{0.5\textwidth}
+        \textbf{Diccionarios Hash:}
+        \begin{equation*}
+            T_{\text{hash}}(N) = c' \implies \mathcal{O}(1)
+        \end{equation*}
+        \begin{itemize}
+            \item Acceso directo por cálculo hash: $h(\text{key}) \pmod M$.
+            \item Independiente del número de elementos.
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\section{Structural Pattern Matching: match-case}
+
+\begin{frame}[fragile]{Structural Pattern Matching (Python 3.10+)}
+\begin{lstlisting}
+match evento:
+    case ('MALWARE', severidad) if severidad >= 8:
+        return aislar_host()
+    case ('PHISHING', _):
+        return bloquear_dns()
+    case ('DOS', _):
+        return aplicar_rate_limit()
+    case _:
+        return registrar_log_auditoria()
+\end{lstlisting}
+\begin{exampleblock}{Ventajas}
+    Permite desestructurar tuplas, validar tipos y aplicar cláusulas de guarda (\textit{guards}) en una sola construcción sintáctica limpia.
+\end{exampleblock}
+\end{frame}
+
+\section{Patrón de Despacho en Producción}
+
+\begin{frame}[fragile]{Patrón Dispatch Dictionary en Ciberseguridad y Arte}
+\begin{lstlisting}
+DESPACHO_ACCIONES = {
+    'RANSOMWARE': aislar_host,
+    'DDOS': propagar_bgp_flowspec,
+    'SQLI': inyectar_regla_waf
+}
+
+def procesar_evento(tipo_alerta, datos):
+    manejador = DESPACHO_ACCIONES.get(tipo_alerta, accion_por_defecto)
+    return manejador(datos)  # Ejecucion O(1)
+\end{lstlisting}
+\begin{block}{Beneficio de Mantenibilidad}
+    Añadir una nueva acción no modifica la función principal (cumplimiento del principio \textit{Open/Closed} de SOLID).
+\end{block}
+\end{frame}
+
+\begin{frame}{Conclusiones}
+    \begin{itemize}
+        \item Las cadenas extensas de \texttt{if-elif} deben evitarse en favor de diccionarios de despacho o \texttt{match-case}.
+        \item La complejidad $\mathcal{O}(1)$ es esencial para sistemas de seguridad en tiempo real y motores de renderizado.
+        \item \textbf{Siguiente Sesión (0.3):} Bucles Iterativos Deterministas (\texttt{for}), \texttt{enumerate} y Comprensiones Pythonicas.
+    \end{itemize}
+\end{frame}
+
+\end{document}
