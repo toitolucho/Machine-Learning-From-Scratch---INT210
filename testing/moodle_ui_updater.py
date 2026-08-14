@@ -88,25 +88,38 @@ def run_automation():
                 add_button = page.locator('a[title="Agregar..."]')
                 if not add_button.is_visible():
                     # Fallback selector for the add file button
-                    add_button = page.locator('.fp-btn-add')
+                    add_button = page.locator('.fp-btn-add').first
                 
                 add_button.click()
                 
-                # Wait for the file picker modal
-                page.wait_for_selector('.fp-repo-upload', state='visible')
+                # Wait for the file picker modal to appear
+                print("Waiting for file picker dialog...")
+                page.wait_for_selector('.moodle-dialogue-base', state='visible', timeout=10000)
                 
                 # Click the "Upload a file" tab on the left
-                page.locator('.fp-repo-upload').click()
+                print("Selecting upload tab...")
+                upload_tab = page.locator('.fp-repo:has-text("Subir un archivo")')
+                if not upload_tab.is_visible():
+                     upload_tab = page.locator('.fp-repo:has-text("Upload a file")')
+                if not upload_tab.is_visible():
+                     upload_tab = page.locator('.fp-repo-upload') # fallback to original class
                 
-                # Set the file in the hidden input
-                page.locator('input[type="file"][name="repo_upload_file"]').set_input_files(item['attachment_path'])
+                upload_tab.first.click()
+                
+                # Wait for the file input to appear and set the file
+                print("Setting file...")
+                file_input = page.locator('input[type="file"]')
+                file_input.wait_for(state='attached', timeout=5000)
+                file_input.first.set_input_files(item['attachment_path'])
                 
                 # Click the "Upload this file" button
+                print("Clicking upload button...")
                 upload_btn = page.locator('button.fp-upload-btn')
-                upload_btn.click()
+                upload_btn.first.click()
                 
                 # Wait for upload to complete (modal disappears)
-                page.wait_for_selector('.moodle-dialogue-base', state='hidden', timeout=15000)
+                print("Waiting for upload to complete...")
+                page.wait_for_selector('.moodle-dialogue-base', state='hidden', timeout=30000)
                 print("File uploaded successfully!")
             elif item.get('attachment_path'):
                 print(f"WARNING: File not found at {item['attachment_path']}. Skipping upload.")
