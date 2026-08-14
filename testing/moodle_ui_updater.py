@@ -2,9 +2,12 @@ import os
 import json
 import time
 import getpass
+from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright
 
-MOODLE_DOMAIN = 'https://ecampus.usfx.bo'
+load_dotenv()
+
+MOODLE_DOMAIN = os.environ.get('MOODLE_DOMAIN', 'https://ecampus.usfx.bo')
 LOGIN_URL = f'{MOODLE_DOMAIN}/login/index.php'
 
 def get_credentials():

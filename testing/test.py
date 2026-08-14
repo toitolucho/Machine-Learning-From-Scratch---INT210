@@ -1,16 +1,20 @@
+import os
 import requests
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ================= CONFIGURATION =================
 # 1. Paste your key from "Claves de seguridad" here
 # TOKEN = '179539aa8205ed0a428a0977cf6ea032' --usfx
 
-TOKEN = 'f0ca8d48a205bb9b8df847c979f99e49' 
+TOKEN = os.environ.get('MOODLE_TOKEN')
 
 #TOKEN = '7a2e06de3d20b346658ba9e75a919e34'  # postgrado
 
 # 2. Configuration based on your links
-MOODLE_DOMAIN = 'https://ecampus.usfx.bo'
+MOODLE_DOMAIN = os.environ.get('MOODLE_DOMAIN', 'https://ecampus.usfx.bo')
 #MOODLE_DOMAIN = 'https://aulasvirtuales.usfx.bo/tecnologia'
 COURSE_ID = 1413          # From your course link
 CM_ID_FROM_URL = 410653   # From your assignment link (view.php?id=XXXX)

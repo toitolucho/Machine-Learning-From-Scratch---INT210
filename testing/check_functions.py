@@ -1,8 +1,12 @@
+import os
 import requests
 import json
+from dotenv import load_dotenv
 
-TOKEN = 'f0ca8d48a205bb9b8df847c979f99e49' 
-MOODLE_DOMAIN = 'https://ecampus.usfx.bo'
+load_dotenv()
+
+TOKEN = os.environ.get('MOODLE_TOKEN')
+MOODLE_DOMAIN = os.environ.get('MOODLE_DOMAIN', 'https://ecampus.usfx.bo')
 ENDPOINT = f'{MOODLE_DOMAIN}/webservice/rest/server.php'
 
 def call_moodle(function, params={}):
