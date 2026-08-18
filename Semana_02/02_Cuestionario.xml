@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- Categoría Base -->
+<question type="category">
+    <category><text>$course$/Semana 2 - Preprocesamiento</text></category>
+    <info format="html"><text><![CDATA[Cuestionario de la Semana 2: Limpieza, Escalamiento y Outliers.]]></text></info>
+</question>
+
+<!-- Q01. Selección Múltiple -->
+<question type="multichoice">
+    <name><text>Q01. Sensibilidad al Escalamiento</text></name>
+    <questiontext format="html"><text><![CDATA[<p>¿Por qué los modelos como k-NN son altamente sensibles a la escala física de las características, mientras que los Árboles de Decisión no lo son?</p>]]></text></questiontext>
+    <generalfeedback format="html"><text><![CDATA[k-NN calcula distancias euclidianas. Los árboles de decisión cortan características individualmente.]]></text></generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answer fraction="100">
+        <text><![CDATA[Porque k-NN calcula distancias matemáticas (como la euclidiana), donde variables con magnitudes mayores dominan por completo el cálculo del vecino más cercano.]]></text>
+        <feedback format="html"><text><![CDATA[¡Correcto!]]></text></feedback>
+    </answer>
+    <answer fraction="-33.33333">
+        <text><![CDATA[Porque k-NN requiere que todas las variables sean obligatoriamente categóricas.]]></text>
+        <feedback format="html"><text><![CDATA[Falso. k-NN funciona con continuas.]]></text></feedback>
+    </answer>
+    <answer fraction="-33.33333">
+        <text><![CDATA[Porque los Árboles de Decisión escalan los datos internamente antes de entrenar.]]></text>
+        <feedback format="html"><text><![CDATA[Falso. No escalan nada, su matemática es lógica/condicional.]]></text></feedback>
+    </answer>
+    <answer fraction="-33.33333">
+        <text><![CDATA[Porque k-NN realiza una optimización por gradiente descendente estricta.]]></text>
+        <feedback format="html"><text><![CDATA[Falso. k-NN es un algoritmo "perezoso" que no usa gradientes.]]></text></feedback>
+    </answer>
+</question>
+
+<!-- Q02. Selección Múltiple -->
+<question type="multichoice">
+    <name><text>Q02. Data Leakage en Escalamiento</text></name>
+    <questiontext format="html"><text><![CDATA[<p>¿Qué sucede si aplicamos el método <code>fit_transform()</code> de <code>StandardScaler</code> sobre todo el dataset ANTES de hacer la división entre entrenamiento y prueba (train/test split)?</p>]]></text></questiontext>
+    <generalfeedback format="html"><text><![CDATA[Aplicar fit en el dataset entero causa "Data Leakage" (filtración de datos), porque el modelo conocerá la media de los datos del futuro (prueba).]]></text></generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answer fraction="100">
+        <text><![CDATA[Ocurre "Data Leakage", ya que la media y varianza estarán contaminadas con información de los datos de prueba, falsificando el rendimiento real.]]></text>
+        <feedback format="html"><text><![CDATA[¡Correcto! El escalador solo debe aprender (fit) del conjunto de entrenamiento.]]></text></feedback>
+    </answer>
+    <answer fraction="-33.33333">
+        <text><![CDATA[Mejora el rendimiento del modelo porque tiene más datos para calcular el promedio.]]></text>
+        <feedback format="html"><text><![CDATA[Falso. El rendimiento medido no será real en producción.]]></text></feedback>
+    </answer>
+    <answer fraction="-33.33333">
+        <text><![CDATA[Se genera un error sintáctico porque StandardScaler no puede procesar tablas enteras.]]></text>
+        <feedback format="html"><text><![CDATA[Falso. Procesará la tabla sin dar error de código.]]></text></feedback>
+    </answer>
+    <answer fraction="-33.33333">
+        <text><![CDATA[No pasa absolutamente nada, es una práctica recomendada en la industria.]]></text>
+        <feedback format="html"><text><![CDATA[Falso. Es considerado un error grave (Antipatrón).]]></text></feedback>
+    </answer>
+</question>
+
+<!-- Q03. Completar Código (shortanswer) -->
+<question type="shortanswer">
+    <name><text>Q03. Completar Código - Valores Nulos</text></name>
+    <questiontext format="html">
+        <text><![CDATA[<p>Complete la función correcta de Pandas para eliminar <strong>filas enteras</strong> donde una columna específica ("etiqueta") tenga valores nulos (NaN):</p>
+<pre>
+df_limpio = df.???(subset=['etiqueta'])
+</pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html"><text><![CDATA[La función para eliminar nulos es dropna.]]></text></generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <usecase>0</usecase>
+    <answer fraction="100">
+        <text>dropna</text>
+        <feedback format="html"><text><![CDATA[¡Correcto!]]></text></feedback>
+    </answer>
+</question>
+
+<!-- Q04. Completar Código (shortanswer) -->
+<question type="shortanswer">
+    <name><text>Q04. Completar Código - Imputación Mediana</text></name>
+    <questiontext format="html">
+        <text><![CDATA[<p>Complete la función correcta de Pandas para <strong>rellenar</strong> todos los valores nulos (NaN) de una columna con un valor previamente calculado:</p>
+<pre>
+df['salario'] = df['salario'].???(mediana_salario)
+</pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html"><text><![CDATA[La función para rellenar nulos es fillna.]]></text></generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <usecase>0</usecase>
+    <answer fraction="100">
+        <text>fillna</text>
+        <feedback format="html"><text><![CDATA[¡Correcto!]]></text></feedback>
+    </answer>
+</question>
+
+<!-- Q05. Emparejamiento (matching) -->
+<question type="matching">
+    <name><text>Q05. Escalamiento: MinMax vs Standard</text></name>
+    <questiontext format="html"><text><![CDATA[<p>Relacione el escalador matemático con su definición y debilidad correcta:</p>]]></text></questiontext>
+    <defaultgrade>1</defaultgrade>
+    <shuffleanswers>true</shuffleanswers>
+    <subquestion format="html">
+        <text><![CDATA[MinMaxScaler]]></text>
+        <answer><text>Acota los datos estrictamente entre 0 y 1, pero es frágil ante Outliers masivos.</text></answer>
+    </subquestion>
+    <subquestion format="html">
+        <text><![CDATA[StandardScaler]]></text>
+        <answer><text>Centra los datos con Media=0 y Varianza=1, basado en distribuciones.</text></answer>
+    </subquestion>
+</question>
+
+<!-- Q06. Emparejamiento (matching) -->
+<question type="matching">
+    <name><text>Q06. Error Tipo II en Bioinformática</text></name>
+    <questiontext format="html"><text><![CDATA[<p>Empareje la situación con el tipo de error en el dataset de Cáncer de Mama (Donde Positivo = Maligno, Negativo = Benigno):</p>]]></text></questiontext>
+    <defaultgrade>1</defaultgrade>
+    <shuffleanswers>true</shuffleanswers>
+    <subquestion format="html">
+        <text><![CDATA[Modelo dice SANO, pero el paciente tiene CÁNCER.]]></text>
+        <answer><text>Falso Negativo (Cuesta Vidas)</text></answer>
+    </subquestion>
+    <subquestion format="html">
+        <text><![CDATA[Modelo dice CÁNCER, pero el paciente está SANO.]]></text>
+        <answer><text>Falso Positivo (Ansiedad e invasión médica innecesaria)</text></answer>
+    </subquestion>
+</question>
+
+<!-- Q07. Verdadero/Falso -->
+<question type="truefalse">
+    <name><text>Q07. Label Encoding vs One-Hot Encoding</text></name>
+    <questiontext format="html"><text><![CDATA[<p>Utilizar Label Encoding (asignar valores como 0, 1, 2) en una variable nominal como "Marca de Autos" puede hacer que un modelo matemático piense falsamente que la Marca 2 "vale" el doble que la Marca 1.</p>]]></text></questiontext>
+    <generalfeedback format="html"><text><![CDATA[Verdadero. Para variables nominales sin orden jerárquico se debe usar One-Hot Encoding.]]></text></generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <answer fraction="100">
+        <text>true</text>
+        <feedback format="html"><text><![CDATA[¡Correcto!]]></text></feedback>
+    </answer>
+    <answer fraction="0">
+        <text>false</text>
+        <feedback format="html"><text><![CDATA[Incorrecto.]]></text></feedback>
+    </answer>
+</question>
+
+<!-- Q08. Verdadero/Falso -->
+<question type="truefalse">
+    <name><text>Q08. Outliers y Promedios</text></name>
+    <questiontext format="html"><text><![CDATA[<p>Al imputar valores nulos, la Media (promedio) es matemáticamente más robusta e inmune a Outliers destructivos que la Mediana.</p>]]></text></questiontext>
+    <generalfeedback format="html"><text><![CDATA[Falso. La Media se desplaza drásticamente por un Outlier. La Mediana es la robusta.]]></text></generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <answer fraction="100">
+        <text>false</text>
+        <feedback format="html"><text><![CDATA[¡Correcto! La media es frágil frente a valores atípicos.]]></text></feedback>
+    </answer>
+    <answer fraction="0">
+        <text>true</text>
+        <feedback format="html"><text><![CDATA[Incorrecto. Piensa en el ejemplo de los estaturas en un aula y un gigante que ingresa.]]></text></feedback>
+    </answer>
+</question>
+
+<!-- Q09. Arrastrar y Soltar (ddwtos) -->
+<question type="ddwtos">
+    <name><text>Q09. Detección de Outliers (IQR)</text></name>
+    <questiontext format="html">
+        <text><![CDATA[<p>Analice el siguiente bloque lógico para encontrar el límite superior de tolerancia de outliers usando el Rango Intercuartílico (IQR). Complete los campos vacíos.</p>
+        <pre>
+Q1 = df['peso'].[[1]](0.25)
+Q3 = df['peso'].[[1]](0.75)
+IQR = Q3 - Q1
+limite_superior = Q3 + (1.5 * [[2]])
+        </pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html"><text><![CDATA[Se usa quantile para calcular cuartiles, y la fórmula multiplica 1.5 por IQR.]]></text></generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <shuffleanswers>true</shuffleanswers>
+    <dragbox>
+        <text><![CDATA[quantile]]></text>
+        <group>1</group>
+    </dragbox>
+    <dragbox>
+        <text><![CDATA[IQR]]></text>
+        <group>2</group>
+    </dragbox>
+    <dragbox>
+        <text><![CDATA[percentile]]></text>
+        <group>1</group>
+    </dragbox>
+    <dragbox>
+        <text><![CDATA[Q1]]></text>
+        <group>2</group>
+    </dragbox>
+</question>
+
+<!-- Q10. Arrastrar y Soltar (ddwtos) -->
+<question type="ddwtos">
+    <name><text>Q10. One-Hot Encoding en Pandas</text></name>
+    <questiontext format="html">
+        <text><![CDATA[<p>Complete la sintaxis correcta para transformar una columna cualitativa llamada "alerta" en vectores binarios (One-Hot) usando la función nativa de Pandas.</p>
+        <pre>
+df_transformado = pd.[[1]](df, columns=['[[2]]'])
+        </pre>]]></text>
+    </questiontext>
+    <generalfeedback format="html"><text><![CDATA[La función de Pandas para esto es get_dummies.]]></text></generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <shuffleanswers>true</shuffleanswers>
+    <dragbox>
+        <text><![CDATA[get_dummies]]></text>
+        <group>1</group>
+    </dragbox>
+    <dragbox>
+        <text><![CDATA[alerta]]></text>
+        <group>2</group>
+    </dragbox>
+    <dragbox>
+        <text><![CDATA[one_hot]]></text>
+        <group>1</group>
+    </dragbox>
+    <dragbox>
+        <text><![CDATA[label]]></text>
+        <group>2</group>
+    </dragbox>
+</question>
+
+</quiz>

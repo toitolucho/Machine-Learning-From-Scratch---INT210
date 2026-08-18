@@ -1,0 +1,98 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{fontspec}
+
+% Tipografías de la Identidad Visual
+\setmainfont{Inter}
+\setsansfont{Inter}
+\setmonofont{JetBrains Mono}
+\newfontfamily\titlefont{Montserrat}[BoldFont={Montserrat Bold}]
+
+% Colores de la Identidad Visual
+\definecolor{AzulMarino}{HTML}{1A365D}
+\definecolor{GrisPizarra}{HTML}{4A5568}
+\definecolor{BlancoNieve}{HTML}{F7FAFC}
+\definecolor{VerdeAzulado}{HTML}{319795}
+
+% Aplicación de colores a Beamer
+\setbeamercolor{palette primary}{bg=AzulMarino, fg=BlancoNieve}
+\setbeamercolor{palette secondary}{bg=VerdeAzulado, fg=BlancoNieve}
+\setbeamercolor{palette tertiary}{bg=GrisPizarra, fg=BlancoNieve}
+\setbeamercolor{structure}{fg=AzulMarino}
+\setbeamercolor{background canvas}{bg=BlancoNieve}
+\setbeamercolor{normal text}{fg=GrisPizarra}
+
+\setbeamerfont{title}{family=\titlefont, series=\bfseries, size=\Huge}
+\setbeamerfont{frametitle}{family=\titlefont, series=\bfseries, size=\LARGE}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\color{GrisPizarra}\small,
+  keywordstyle=\color{VerdeAzulado}\bfseries,
+  stringstyle=\color{AzulMarino},
+  commentstyle=\color{GrisPizarra}\itshape,
+  backgroundcolor=\color{BlancoNieve},
+  frame=single,
+  rulecolor=\color{GrisPizarra}
+}
+
+\title{Práctica Guiada: Pandas y Python}
+\subtitle{Machine Learning (Laboratorio)}
+\author{Clase Práctica - Semana 1}
+\date{}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{Importando Librerías y Cargando Datos}
+    En Ciberseguridad, antes de bloquear un paquete (Malware), debemos leer los registros de red.
+    
+\begin{lstlisting}[language=Python]
+import pandas as pd
+from sklearn.datasets import load_iris
+
+# Carga del dataset simulado
+iris_raw = load_iris()
+df = pd.DataFrame(data=iris_raw.data, 
+                  columns=iris_raw.feature_names)
+\end{lstlisting}
+    
+    \begin{itemize}
+        \item \texttt{pandas}: Librería clave para analizar tablas de datos bidimensionales.
+        \item \texttt{load\_iris}: Carga nuestro dataset clásico para exploración.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Filtros y Consultas (Queries)}
+    ¿Cómo filtramos los ataques maliciosos de un conjunto de 10 millones de filas?
+    
+\begin{lstlisting}[language=Python]
+# Consulta usando query() de Pandas
+filtro = df.query("species == 0 and `petal width (cm)` <= 0.2")
+print(len(filtro))
+\end{lstlisting}
+    
+    \begin{itemize}
+        \item \textbf{\textcolor{VerdeAzulado}{Interpretación de Data:}} Usamos backticks (\`) si las columnas tienen espacios en su nombre.
+        \item Los operadores lógicos como \texttt{and} nos permiten cruzar atributos para detectar anomalías.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Toma de Decisiones: El Negocio Detrás del Filtro}
+    \begin{alertblock}{Métricas de Ciberseguridad}
+    Si creamos un filtro muy estricto:
+    \begin{itemize}
+        \item Incrementamos los \textbf{Falsos Positivos}: Bloqueamos a los diseñadores gráficos.
+        \item Pero reducimos los \textbf{Falsos Negativos}: Disminuye el riesgo de entrada de Malware.
+    \end{itemize}
+    \end{alertblock}
+    
+    ¡A programar en Jupyter!
+\end{frame}
+
+\end{document}
